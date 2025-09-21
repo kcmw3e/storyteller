@@ -1,0 +1,5 @@
+Storyteller is a book/story formatting library/template. Not only does it help
+with formatting: it also provides tools to help authors make sure they come back
+to aspects of their stories, format the resulting document to make hand-editing
+easier, and constructs to help authors mark various parts of their stories that
+need revisiting.
