@@ -48,6 +48,10 @@
 // anywhere in the document, and produces a list of each annotation under its
 // kind.
 //
+// A word of caution: if any annotaion notes have `label`s in them, the document
+// will fail to compile since it cannot have duplicate labels (since this
+// function duplicates the `note` part of annotations).
+//
 // The `filter` argument can be used to specify a filter for what to show in the
 // summary. If it is `none`, then all annotations will be shown. It also may be:
 //   - a function that takes the annotation `kind` as input and returns `true`
