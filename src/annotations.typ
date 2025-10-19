@@ -57,3 +57,10 @@
     [#kind: #list(..notes)]
   }
 }
+
+// Add a note to some text. This is currently just a shorthand for adding a
+// footnote, with the added benefit that it can be shown in the annotations
+// summary.
+#let note(body, note) = {
+  annotation("storyteller:note", body, note)
+}
