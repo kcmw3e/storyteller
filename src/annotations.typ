@@ -77,13 +77,15 @@
 
   let kinds = annotations.keys().filter(filter)
 
+  let kind-styler = current-style.get().annotation-summary-kind
+
   for kind in kinds {
     let notes-and-labels = annotations.at(kind)
     let notes = notes-and-labels.map(note-and-label => {
       let (note, label) = note-and-label
       link(label, note)
     })
-    [#kind: #list(..notes)]
+    [#kind-styler(kind): #list(..notes)]
   }
 }
 

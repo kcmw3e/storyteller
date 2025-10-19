@@ -37,6 +37,7 @@
   ),
   rework: (body) => text(fill: red, body),
   note: text,
+  annotation-summary-kind: strong,
 )
 
 // Create a new style using the default style as a basis for missing style
