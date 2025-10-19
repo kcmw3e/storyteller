@@ -3,3 +3,6 @@ with formatting: it also provides tools to help authors make sure they come back
 to aspects of their stories, format the resulting document to make hand-editing
 easier, and constructs to help authors mark various parts of their stories that
 need revisiting.
+
+Navigating this project:
+- The source code for the library is in the 'src/' directory.
