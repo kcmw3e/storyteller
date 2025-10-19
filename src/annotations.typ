@@ -45,10 +45,34 @@
 // Create a summary of all the annotations in the document. It can be placed
 // anywhere in the document, and produces a list of each annotation under its
 // kind.
-#let annotations-summary() = context {
+//
+// The `filter` argument can be used to specify a filter for what to show in the
+// summary. If it is `none`, then all annotations will be shown. It also may be:
+//   - a function that takes the annotation `kind` as input and returns `true`
+//     if the kind should be included and `false` if not
+//   - a string which will cause only an exact match of annotation `kind`s to be
+//     shown
+//   - a `regex`, where any matching annotation `kind` to the regular expression
+//     will be included
+#let annotations-summary(filter: none) = context {
   let annotations = annotations.final()
 
-  for (kind, notes-and-labels) in annotations.pairs() {
+  let filter = if filter == none {
+    (key) => true
+  } else if type(filter) == function {
+    filter
+  } else if type(filter) == str {
+    (key) => key == kind
+  } else if type(filter) == regex {
+    (key) => filter in key
+  } else {
+    panic(strfmt("Cannot filter on annotations with '{}'.", kind))
+  }
+
+  let kinds = annotations.keys().filter(filter)
+
+  for kind in kinds {
+    let notes-and-labels = annotations.at(kind)
     let notes = notes-and-labels.map(note-and-label => {
       let (note, label) = note-and-label
       link(label, note)
