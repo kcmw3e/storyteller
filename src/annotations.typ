@@ -11,6 +11,8 @@
 
 #import "@preview/oxifmt:1.0.0": strfmt
 
+#import "style.typ": current-style
+
 // This state tracks all annotations that are added to the document. They can be
 // used to produce an "annotation summary" (even at the beginning of the
 // document!), which lists all of the annotations for reach kind with links to
@@ -85,6 +87,10 @@
 // footnote, with the added benefit that it can be shown in the annotations
 // summary.
 #let note(body, note) = {
+  let body = context {
+    let styler = current-style.get().note
+    styler(body)
+  }
   annotation("storyteller:note", body, note)
 }
 
@@ -102,7 +108,9 @@
 // marked for rework.
 #let rework(body, note) = context {
   num-reworks.update(old => old + 1)
-  annotation("storyteller:rework", text(fill: rgb("#c04242"), body), note)
+
+  let styler = current-style.get().rework
+  annotation("storyteller:rework", styler(body), note)
 }
 
 // Check if there are any outstanding sections marked for reworking. Panic if
@@ -124,8 +132,6 @@
 // entries (may be any of the built-in Typst directions `ltr`, `rtl`, `ttb`,
 // or `btt`), and `inline` determines whether to `box` the output or not.
 #let comparison(note: [Comparison], dir: ltr, inline: false, ..bodies) = {
-  let colors = (red, blue, green, purple)
-
   let bodies = bodies.pos()
 
   if dir in (rtl, btt) {
@@ -134,10 +140,12 @@
 
   let bodies = (bodies
     .enumerate()
-    .map(i-and-body => {
+    .map(i-and-body => context {
       let (i, body) = i-and-body
-      let color-index = calc.rem(i, colors.len())
-      text(fill: colors.at(color-index), body)
+      let option-styles = current-style.get().comparison-options
+      let style-index = calc.rem(i, option-styles.len())
+      let styler = option-styles.at(style-index)
+      styler(body)
     })
   )
 
