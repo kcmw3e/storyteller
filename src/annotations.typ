@@ -92,3 +92,45 @@
     panic(strfmt("Pending reworks: {}", num-reworks))
   }
 }
+
+// Output multiple versions of the same section next to each other, optionally
+// with a note.
+//
+// The `dir` parameter determines which direction to order the comparison
+// entries (may be any of the built-in Typst directions `ltr`, `rtl`, `ttb`,
+// or `btt`), and `inline` determines whether to `box` the output or not.
+#let comparison(note: [Comparison], dir: ltr, inline: false, ..bodies) = {
+  let colors = (red, blue, green, purple)
+
+  let bodies = bodies.pos()
+
+  if dir in (rtl, btt) {
+    bodies = bodies.rev()
+  }
+
+  let bodies = (bodies
+    .enumerate()
+    .map(i-and-body => {
+      let (i, body) = i-and-body
+      let color-index = calc.rem(i, colors.len())
+      text(fill: colors.at(color-index), body)
+    })
+  )
+
+  let body = if dir in (ltr, rtl) {
+    grid(columns: bodies.len(), gutter: 1em, ..bodies)
+  } else if dir in (ttb, btt) {
+    set par.line(numbering: none)
+    grid(rows: bodies.len(), gutter: 1em, ..bodies)
+  } else {
+    panic(strfmt("Invalid direction '{}'.", dir))
+  }
+
+  body = if inline {
+    box(body)
+  } else {
+    body
+  }
+
+  annotation("storyteller:comparison", body, note)
+}
