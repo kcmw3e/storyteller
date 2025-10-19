@@ -87,6 +87,10 @@
 // footnote, with the added benefit that it can be shown in the annotations
 // summary.
 #let note(body, note) = {
+  let body = context {
+    let styler = current-style.get().note
+    styler(body)
+  }
   annotation("storyteller:note", body, note)
 }
 

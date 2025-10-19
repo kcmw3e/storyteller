@@ -36,6 +36,7 @@
       }),
   ),
   rework: (body) => text(fill: red, body),
+  note: text,
 )
 
 // Create a new style using the default style as a basis for missing style
