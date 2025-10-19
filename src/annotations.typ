@@ -63,3 +63,32 @@
 #let note(body, note) = {
   annotation("storyteller:note", body, note)
 }
+
+// Tracks the number of rework-marked sections in the document. Used for
+// checking outstanding changes needed before compiling a production-ready
+// document.
+#let num-reworks = state("storyteller:reworks", 0)
+
+// Annotate a section to be reworked.
+//
+// The number of outstanding sections marked for reworking is tracked in
+// `num-reworks`, and `check-reworks` can be used to cause Typst to panic if
+// this number is nonzero. Storyteller uses this behavior for disallowing the
+// compilation of a document in "print-ready" format while it still has parts
+// marked for rework.
+#let rework(body, note) = context {
+  num-reworks.update(old => old + 1)
+  annotation("storyteller:rework", text(fill: rgb("#c04242"), body), note)
+}
+
+// Check if there are any outstanding sections marked for reworking. Panic if
+// there are any.
+//
+// A call to this can be placed anywhere in the document since it uses the final
+// value of the `num-reworks` state.
+#let check-reworks() = context {
+  let num-reworks = num-reworks.final()
+  if num-reworks > 0 {
+    panic(strfmt("Pending reworks: {}", num-reworks))
+  }
+}
