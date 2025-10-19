@@ -1,0 +1,16 @@
+[package]
+name = "storyteller"
+version = "0.0.0"
+entrypoint = "src/lib.typ"
+authors = ["Casey Walker"]
+license = "MIT"
+description = "Novel/story formatting and annotation."
+repository = "https://github.com/kcmw3e/storyteller"
+keywords = ["book", "novel", "story", "ficiton", "annotation"]
+categories = ["book"]
+exclude = ["docs", "tests"]
+
+[template]
+path = "template/"
+entrypoint = "main.typ"
+thumbnail = "thumbnail.png"
