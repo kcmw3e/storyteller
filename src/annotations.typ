@@ -9,6 +9,8 @@
 // story while they are still included in the document.
 // -----------------------------------------------------------------------------
 
+#import "@preview/oxifmt:1.0.0": strfmt
+
 // This state tracks all annotations that are added to the document. They can be
 // used to produce an "annotation summary" (even at the beginning of the
 // document!), which lists all of the annotations for reach kind with links to
@@ -25,10 +27,7 @@
   // This makes sure every label is unique for each annotation of each kind.
   let num = annotations.get().at(kind, default: ()).len()
 
-  let body-label = label(
-    "storyteller:annotation:body:" + kind + ":"
-    + str(num)
-  )
+  let body-label = label(strfmt("storyteller:annotation:body:{}-{}", kind, num))
 
   annotations.update(old => {
     if kind not in old {
