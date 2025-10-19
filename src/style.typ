@@ -30,10 +30,10 @@
   // styling between comparisons, just set it to an array of one element that
   // contains the function `text`).
   comparison-options: (
-    (body) => text(fill: red, body),
-    (body) => text(fill: blue, body),
-    (body) => text(fill: green, body),
-    (body) => text(fill: purple, body),
+    ..(blue, purple, green, eastern, olive, fuchsia, orange)
+      .map(color => {
+        (body) => text(fill: color, body)
+      }),
   ),
   rework: (body) => text(fill: red, body),
 )
