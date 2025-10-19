@@ -6,3 +6,6 @@ need revisiting.
 
 Navigating this project:
 - The source code for the library is in the 'src/' directory.
+- The 'version' file simply contains the text of the current version number of
+  Storyteller. It is really only for scripting, such as when building the
+  package to be submitted to Typst.
