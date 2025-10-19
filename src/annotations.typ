@@ -106,11 +106,14 @@
 // this number is nonzero. Storyteller uses this behavior for disallowing the
 // compilation of a document in "print-ready" format while it still has parts
 // marked for rework.
-#let rework(body, note) = context {
+#let rework(body, note) = {
   num-reworks.update(old => old + 1)
 
-  let styler = current-style.get().rework
-  annotation("storyteller:rework", styler(body), note)
+  let body = context {
+    let styler = current-style.get().rework
+    styler(body)
+  }
+  annotation("storyteller:rework", body, note)
 }
 
 // Check if there are any outstanding sections marked for reworking. Panic if
