@@ -35,6 +35,7 @@
     (body) => text(fill: green, body),
     (body) => text(fill: purple, body),
   ),
+  rework: (body) => text(fill: red, body),
 )
 
 // Create a new style using the default style as a basis for missing style

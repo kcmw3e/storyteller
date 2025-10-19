@@ -104,7 +104,9 @@
 // marked for rework.
 #let rework(body, note) = context {
   num-reworks.update(old => old + 1)
-  annotation("storyteller:rework", text(fill: rgb("#c04242"), body), note)
+
+  let styler = current-style.get().rework
+  annotation("storyteller:rework", styler(body), note)
 }
 
 // Check if there are any outstanding sections marked for reworking. Panic if
