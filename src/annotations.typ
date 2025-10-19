@@ -117,9 +117,9 @@
     })
   )
 
-  let body = if dir in (ltr, rtl) {
+  let body = if dir.axis() == "horizontal" {
     grid(columns: bodies.len(), gutter: 1em, ..bodies)
-  } else if dir in (ttb, btt) {
+  } else if dir.axis() == "vertical" {
     set par.line(numbering: none)
     grid(rows: bodies.len(), gutter: 1em, ..bodies)
   } else {
